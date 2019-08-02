@@ -16,15 +16,15 @@ import os
 # Training settings
 parser = argparse.ArgumentParser(description='Visda Classification')
 parser.add_argument('--batch-size', type=int, default=32, metavar='N',
-                    help='input batch size for training (default: 64)')
+                    help='input batch size for training (default: 32)')
 parser.add_argument('--test-batch-size', type=int, default=32, metavar='N',
-                    help='input batch size for testing (default: 1000)')
+                    help='input batch size for testing (default: 32)')
 parser.add_argument('--epochs', type=int, default=50, metavar='N',
-                    help='number of epochs to train (default: 10)')
+                    help='number of epochs to train (default: 50)')
 parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
                     help='learning rate (default: 0.001)')
 parser.add_argument('--momentum', type=float, default=0.9, metavar='M',
-                    help='SGD momentum (default: 0.5)')
+                    help='SGD momentum (default: 0.9)')
 parser.add_argument('--optimizer', type=str, default='momentum', metavar='OP',
                     help='the name of optimizer')
 parser.add_argument('--no-cuda', action='store_true', default=False,
@@ -128,7 +128,7 @@ def train(num_epoch):
         G.train()
         F1.train()
         F2.train()
-        print(len(dataset.data_loader_A.dataset), len(enumerate(dataset)))
+        print(len(dataset.data_loader_A.dataset), enumerate(dataset))
         for batch_idx, data in enumerate(dataset):
             if batch_idx * batch_size > 30000:
                 break
