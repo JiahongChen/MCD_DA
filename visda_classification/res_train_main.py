@@ -132,6 +132,8 @@ def train(num_epoch):
         for batch_idx, data in enumerate(dataset):
             if batch_idx * batch_size > 30000:
                 break
+            print(type(data))
+            print(data)
             if args.cuda:
                 data1 = data['S']
                 target1 = data['S_label']
@@ -210,7 +212,6 @@ def train(num_epoch):
 
                 loss_dis.backward()
                 optimizer_g.step()
-            print (args.log_interval)
             if batch_idx % args.log_interval == 0:
                 print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
                     ep, batch_idx * len(data), len(dataset.data_loader_A.dataset),
