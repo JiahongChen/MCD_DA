@@ -101,7 +101,7 @@ class AlexNet(nn.Module):
         #self.classifier = nn.Sequential(*mod)
     def forward(self, x):
         x = self.features(x)
-        x = x.view(x.size(0),9216)
+        x = x.view(x.size(0),4096)
         #x = self.classifier(x)
 
         return x
