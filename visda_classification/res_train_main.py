@@ -133,7 +133,7 @@ def train(num_epoch):
             if batch_idx * batch_size > 30000:
                 break
             print(type(data))
-            print(data)
+            print(data['S'].size())
             if args.cuda:
                 data1 = data['S']
                 target1 = data['S_label']
