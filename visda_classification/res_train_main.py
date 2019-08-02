@@ -129,9 +129,11 @@ def train(num_epoch):
         F1.train()
         F2.train()
         print(len(dataset.data_loader_A.dataset))
-        for batch_idx, data in enumerate(dataset):
+        for batch_idx, data in enumerate(dataset): # number of batches: 207785/64 =3246
             # if batch_idx * batch_size > 30000:
             #     break
+            if batch_idx * len(data)/2 > len(dataset.data_loader_A.dataset):
+            	break
             # print(type(data))
             # print(data['S'].size())
             if args.cuda:
@@ -212,10 +214,10 @@ def train(num_epoch):
 
                 loss_dis.backward()
                 optimizer_g.step()
-            if batch_idx % args.log_interval == 0:
+            if batch_idx % args.log_interval == 0: # number of print out: 3264/50 = 64
                 print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
-                    ep, batch_idx * len(data), len(dataset.data_loader_A.dataset),
-                    100. * batch_idx / len(dataset.data_loader_A.dataset), loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
+                    ep, batch_idx * len(data)/2, len(dataset.data_loader_A.dataset),
+                    batch_idx * len(data)/ 2 / len(dataset.data_loader_A.dataset), loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
             if batch_idx == 1 and ep >0:
                 test(ep)
                 G.train()
