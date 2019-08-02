@@ -101,7 +101,7 @@ class AlexNet(nn.Module):
         #self.classifier = nn.Sequential(*mod)
     def forward(self, x):
         x = self.features(x)
-        x = x.view(x.size(0),4096)
+        x = x.view(x.size(0),9216)
         #x = self.classifier(x)
 
         return x
@@ -138,7 +138,10 @@ class AlexClassifier(nn.Module):
         super(AlexClassifier, self).__init__()
         mod = []
         mod.append(nn.Dropout())
-        mod.append(nn.Linear(4096,256))
+        mod.append(nn.Linear(256 * 6 * 6, 4096))
+        mod.append(nn.ReLU())
+        mod.append(nn.Dropout())
+        mod.append(nn.Linear(4096,4096))#mod.append(nn.Linear(4096,256))
         #mod.append(nn.BatchNorm1d(256,affine=True))
         mod.append(nn.ReLU())
         #mod.append(nn.Linear(256,256))
@@ -146,7 +149,7 @@ class AlexClassifier(nn.Module):
         #mod.append(nn.ReLU())
         mod.append(nn.Dropout())
         #self.top = nn.Linear(256,256)        
-        mod.append(nn.Linear(256,31))
+        mod.append(nn.Linear(256,13))
         self.classifier = nn.Sequential(*mod)
     def set_lambda(self, lambd):
         self.lambd = lambd
