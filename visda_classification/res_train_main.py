@@ -40,7 +40,7 @@ parser.add_argument('--num-layer', type=int, default=2, metavar='K',
                     help='how many layers for classifier')
 parser.add_argument('--name', type=str, default='board', metavar='B',
                     help='board dir')
-parser.add_argument('--save', type=str, default='save/', metavar='B',
+parser.add_argument('--save', type=str, default='../../save/', metavar='B',
                     help='board dir')
 parser.add_argument('--train_path', type=str, default='../../data', metavar='B',
                     help='directory of source datasets')
