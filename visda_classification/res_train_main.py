@@ -57,6 +57,7 @@ val_path = args.val_path
 num_k = args.num_k
 num_layer = args.num_layer
 batch_size = args.batch_size
+print(batch_size)
 save_path = args.save
 if not os.path.isdir(save_path):
 	os.mkdir(save_path)
@@ -211,8 +212,8 @@ def train(num_epoch):
                 optimizer_g.step()
             if batch_idx % args.log_interval == 0:
                 print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
-                    ep, batch_idx * len(data), len(dataset),
-                    100. * batch_idx / len(dataset), loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
+                    ep, batch_idx * len(data), len(dataset.data_loader_A.dataset),
+                    100. * batch_idx / len(dataset.data_loader_A.dataset), loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
             if batch_idx == 1 and ep >0:
                 test(ep)
                 G.train()
