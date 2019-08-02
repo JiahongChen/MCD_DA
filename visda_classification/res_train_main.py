@@ -40,7 +40,7 @@ parser.add_argument('--num-layer', type=int, default=2, metavar='K',
                     help='how many layers for classifier')
 parser.add_argument('--name', type=str, default='board', metavar='B',
                     help='board dir')
-parser.add_argument('--save', type=str, default='save/mcd', metavar='B',
+parser.add_argument('--save', type=str, default='save/', metavar='B',
                     help='board dir')
 parser.add_argument('--train_path', type=str, default='../../data', metavar='B',
                     help='directory of source datasets')
@@ -58,7 +58,10 @@ val_path = args.val_path
 num_k = args.num_k
 num_layer = args.num_layer
 batch_size = args.batch_size
-save_path = args.save+'_'+str(args.num_k)
+save_path = args.save
+if not os.path.isdir(save_path):
+	os.mkdir(save_path)
+save_path += 'mcd_'+str(args.num_k)
 featureModel = args.model
 data_transforms = {
     train_path: transforms.Compose([
