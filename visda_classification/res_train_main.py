@@ -12,6 +12,8 @@ from taskcv_loader import CVDataLoader
 from basenet import *
 import torch.nn.functional as F
 import os
+import numpy as np
+
 # Training settings
 parser = argparse.ArgumentParser(description='Visda Classification')
 parser.add_argument('--batch-size', type=int, default=32, metavar='N',
