@@ -198,7 +198,7 @@ def train(num_epoch):
             if batch_idx % args.log_interval == 0:
                 print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
                     ep, batch_idx * len(data), 70000,
-                    100. * batch_idx / 70000, loss1.data[0],loss2.data[0],loss_dis.data[0],entropy_loss.data[0]))
+                    100. * batch_idx / 70000, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
             if batch_idx == 1 and ep >1:
                 test(ep)
                 G.train()
@@ -220,15 +220,13 @@ def test(epoch):
         if args.cuda:
             data2  = data['T']
             target2 = data['T_label']
-            if val:
-                data2  = data['S']
-                target2 = data['S_label']
+
             data2, target2 = data2.cuda(), target2.cuda()
         data1, target1 = Variable(data2, volatile=True), Variable(target2)
         output = G(data1)
         output1 = F1(output)
         output2 = F2(output)
-        test_loss += F.nll_loss(output1, target1).data[0]
+        test_loss += F.nll_loss(output1, target1).item()
         pred = output1.data.max(1)[1] # get the index of the max log-probability
         correct += pred.eq(target1.data).cpu().sum()
         pred = output2.data.max(1)[1] # get the index of the max log-probability
@@ -243,7 +241,7 @@ def test(epoch):
         100. * correct / size,100.*correct2/size))
     #if 100. * correct / size > 67 or 100. * correct2 / size > 67:
     value = max(100. * correct / size,100. * correct2 / size)
-    if not val and value > 60:
+    if value > 60:
         torch.save(F1.state_dict(), save_path+'_'+args.resnet+'_'+str(value)+'_'+'F1.pth')
         torch.save(F2.state_dict(), save_path+'_'+args.resnet+'_'+str(value)+'_'+'F2.pth')
         torch.save(G.state_dict(), save_path+'_'+args.resnet+'_'+str(value)+'_'+'G.pth')
