@@ -130,8 +130,8 @@ def train(num_epoch):
         F2.train()
         print(len(dataset.data_loader_A.dataset))
         for batch_idx, data in enumerate(dataset):
-            if batch_idx * batch_size > 30000:
-                break
+            # if batch_idx * batch_size > 30000:
+            #     break
             print(type(data))
             print(data['S'].size())
             if args.cuda:
@@ -232,8 +232,8 @@ def test(epoch):
     size = 0
 
     for batch_idx, data in enumerate(dataset_test):
-        if batch_idx*batch_size > 5000:
-            break
+        # if batch_idx*batch_size > 5000:
+        #     break
         if args.cuda:
             data2  = data['T']
             target2 = data['T_label']
