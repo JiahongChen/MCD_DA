@@ -210,7 +210,7 @@ def train(num_epoch):
                 print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
                     ep, batch_idx * len(data), 70000,
                     100. * batch_idx / 70000, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
-            if batch_idx == 1 and ep >1:
+            if batch_idx == 1 and ep >0:
                 test(ep)
                 G.train()
                 F1.train()
