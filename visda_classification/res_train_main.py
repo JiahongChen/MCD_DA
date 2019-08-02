@@ -12,7 +12,6 @@ from taskcv_loader import CVDataLoader
 from basenet import *
 import torch.nn.functional as F
 import os
-import numpy as np
 
 # Training settings
 parser = argparse.ArgumentParser(description='Visda Classification')
@@ -128,6 +127,7 @@ def train(num_epoch):
         G.train()
         F1.train()
         F2.train()
+        print(len(dataset.data_loader_A.dataset))
         for batch_idx, data in enumerate(dataset):
             if batch_idx * batch_size > 30000:
                 break
@@ -211,8 +211,8 @@ def train(num_epoch):
                 optimizer_g.step()
             if batch_idx % args.log_interval == 0:
                 print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
-                    ep, batch_idx * len(data), 70000,
-                    100. * batch_idx / 70000, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
+                    ep, batch_idx * len(data), len(dataset),
+                    100. * batch_idx / len(dataset), loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
             if batch_idx == 1 and ep >0:
                 test(ep)
                 G.train()
