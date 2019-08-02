@@ -130,7 +130,7 @@ def train(num_epoch):
         F2.train()
         print(len(dataset.data_loader_A.dataset))
         for c, value in enumerate(dataset):
-    		print(c)
+            print(c)
         for batch_idx, data in enumerate(dataset):
             if batch_idx * batch_size > 30000:
                 break
