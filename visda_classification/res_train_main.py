@@ -48,6 +48,8 @@ parser.add_argument('--val_path', type=str, default='../../data', metavar='B',
                     help='directory of target datasets')
 parser.add_argument('--resnet', type=str, default='101', metavar='B',
                     help='which resnet 18,50,101,152,200')
+parser.add_argument('--featuremodel', type=str, default='alexnet', metavar='B',
+                    help='type of the feature model used for encoder: [resnet, alexnet]')
 
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
@@ -57,7 +59,7 @@ num_k = args.num_k
 num_layer = args.num_layer
 batch_size = args.batch_size
 save_path = args.save+'_'+str(args.num_k)
-
+featureModel = args.featuremodel
 data_transforms = {
     train_path: transforms.Compose([
         transforms.Scale(256),
@@ -90,9 +92,16 @@ opt= args
 test_loader.initialize(dsets[train_path],dsets[val_path],batch_size,shuffle=True)
 dataset_test = test_loader.load_data()
 option = 'resnet'+args.resnet
-G = ResBase(option)
-F1 = ResClassifier(num_layer=num_layer)
-F2 = ResClassifier(num_layer=num_layer)
+if featureModel =='resnet':
+	print('Using ResNet model as encoder')
+	G = ResBase(option)
+	F1 = ResClassifier(num_layer=num_layer)
+	F2 = ResClassifier(num_layer=num_layer)
+elif featureModel =='alexnet':
+	print('Using AlexNet pre-train model as encoder')
+	G = AlexNet(option)
+	F1 = AlexClassifier(num_layer=num_layer)
+	F2 = AlexClassifier(num_layer=num_layer)
 F1.apply(weights_init)
 F2.apply(weights_init)
 lr = args.lr
