@@ -132,10 +132,6 @@ def train(num_epoch):
         for batch_idx, data in enumerate(dataset): # number of batches: 207785/64 =3246
             # if batch_idx * batch_size > 30000:
             #     break
-            currentData = batch_idx * len(data)/2
-            totalData = len(dataset.data_loader_A.dataset)
-            if currentData > 200000:#totalData:
-            	break
             # print(type(data))
             # print(data['S'].size())
             if args.cuda:
@@ -148,6 +144,10 @@ def train(num_epoch):
             # when pretraining network source only
             eta = 1.0
             data = Variable(torch.cat((data1,data2),0))
+            currentData = batch_idx * len(data)/2
+            totalData = len(dataset.data_loader_A.dataset)
+            if currentData > 200000:#totalData:
+            	break
             target1 = Variable(target1)
             # Step A train all networks to minimize loss on source
             optimizer_g.zero_grad()
