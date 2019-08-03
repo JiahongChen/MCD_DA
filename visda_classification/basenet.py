@@ -141,7 +141,7 @@ class AlexClassifier(nn.Module):
         mod.append(nn.Linear(256 * 6 * 6, 4096))
         mod.append(nn.ReLU())
         mod.append(nn.Dropout())
-        mod.append(nn.Linear(4096,4096)) #mod.append(nn.Linear(4096,256))
+        mod.append(nn.Linear(4096,256))#mod.append(nn.Linear(4096,4096)) #
         #mod.append(nn.BatchNorm1d(256,affine=True))
         mod.append(nn.ReLU())
         #mod.append(nn.Linear(256,256))

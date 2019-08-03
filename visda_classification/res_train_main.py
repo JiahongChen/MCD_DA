@@ -235,8 +235,8 @@ def train(num_epoch):
 				G.train() # what does this train mean?
 				F1.train()
 				F2.train()
-	np.savetxt('correct1Array'+size+'.csv', correct1Array, delimiter = ",")
-	np.savetxt('correct2Array'+size+'.csv', correct2Array, delimiter = ",")
+	np.savetxt('correct1Array'+str(size)+'.csv', correct1Array, delimiter = ",")
+	np.savetxt('correct2Array'+str(size)+'.csv', correct2Array, delimiter = ",")
 
 
 def test(epoch):
