@@ -130,8 +130,8 @@ def train(num_epoch):
         F2.train()
         print(len(dataset.data_loader_A.dataset))
         for batch_idx, data in enumerate(dataset): # number of batches: 207785/64 =3246
-            # if batch_idx * batch_size > 30000:
-            #     break
+            if batch_idx * batch_size > 30000:
+                break
             # print(type(data))
             # print(data['S'].size())
             if args.cuda:
@@ -218,9 +218,12 @@ def train(num_epoch):
                 optimizer_g.step()
             if batch_idx % args.log_interval == 0: # number of print out: 3264/50 = 64
 
-                print('Train Ep: {} [{}/{} ({:.2f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
-                    ep, currentData, totalData,
-                    currentData / totalData, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
+                # print('Train Ep: {} [{}/{} ({:.2f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
+                #     ep, currentData, totalData,
+                #     currentData / totalData, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
+                print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
+                    ep, batch_idx * len(data), 70000,
+                    100. * batch_idx * len(data) / 70000, loss1.data[0],loss2.data[0],loss_dis.data[0],entropy_loss.data[0]))
             if batch_idx == 1 and ep >0:
                 test(ep)
                 G.train()
@@ -237,8 +240,8 @@ def test(epoch):
     size = 0
 
     for batch_idx, data in enumerate(dataset_test):
-        # if batch_idx*batch_size > 5000:
-        #     break
+        if batch_idx*batch_size > 5000:
+            break
         if args.cuda:
             data2  = data['T']
             target2 = data['T_label']
