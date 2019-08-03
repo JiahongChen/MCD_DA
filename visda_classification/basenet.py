@@ -107,7 +107,7 @@ class AlexNet(nn.Module):
         return x
 class AlexNet2(nn.Module):
     def __init__(self):
-        super(AlexNet, self).__init__()
+        super(AlexNet2, self).__init__()
         self.features = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
