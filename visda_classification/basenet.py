@@ -91,7 +91,7 @@ class BaseNet(nn.Module):
 class AlexNet(nn.Module):
     def __init__(self):
         super(AlexNet, self).__init__()
-        model_ft = models.alexnet(pretrained=True)
+        model_ft = models.alexnet(pretrained=False)#model_ft = models.alexnet(pretrained=True)
         mod = list(model_ft.features.children())
         self.features = model_ft.features#nn.Sequential(*mod)        
         print(self.features[0])
@@ -109,7 +109,7 @@ class AlexNet2(nn.Module):
     def __init__(self):
         super(AlexNet2, self).__init__()
         self.features = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=5, stride=4, padding=2),
+            nn.Conv2d(3, 64, kernel_size=5, stride=4, padding=2),#nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=3, stride=2),
             nn.Conv2d(64, 192, kernel_size=5, padding=2),
