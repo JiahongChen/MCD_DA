@@ -105,6 +105,11 @@ elif featureModel =='alexnet':
 	G = AlexNet()
 	F1 = AlexClassifier()
 	F2 = AlexClassifier()
+elif featureModel =='alexnet2':
+	print('===========Using AlexNet self-implemented model as encoder===========')
+	G = AlexNet2()
+	F1 = AlexClassifier()
+	F2 = AlexClassifier()
 F1.apply(weights_init)
 F2.apply(weights_init)
 lr = args.lr
