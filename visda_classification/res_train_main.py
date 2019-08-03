@@ -218,7 +218,7 @@ def train(num_epoch):
                 optimizer_g.step()
             if batch_idx % args.log_interval == 0: # number of print out: 3264/50 = 64
 
-                print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
+                print('Train Ep: {} [{}/{} ({:.2f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
                     ep, currentData, totalData,
                     currentData / totalData, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
             if batch_idx == 1 and ep >0:
