@@ -149,7 +149,7 @@ class AlexClassifier(nn.Module):
         #mod.append(nn.ReLU())
         # mod.append(nn.Dropout())
         #self.top = nn.Linear(256,256)        
-        mod.append(nn.Linear(4096,13)) #mod.append(nn.Linear(256,13))
+        mod.append(nn.Linear(256,13)) #mod.append(nn.Linear(256,13))
         self.classifier = nn.Sequential(*mod)
     def set_lambda(self, lambd):
         self.lambd = lambd
