@@ -132,7 +132,9 @@ def train(num_epoch):
         for batch_idx, data in enumerate(dataset): # number of batches: 207785/64 =3246
             # if batch_idx * batch_size > 30000:
             #     break
-            if batch_idx * len(data)/2 > len(dataset.data_loader_A.dataset):
+            currentData = batch_idx * len(data)/2
+            totalData = len(dataset.data_loader_A.dataset)
+            if currentData > 200000:#totalData:
             	break
             # print(type(data))
             # print(data['S'].size())
@@ -215,8 +217,7 @@ def train(num_epoch):
                 loss_dis.backward()
                 optimizer_g.step()
             if batch_idx % args.log_interval == 0: # number of print out: 3264/50 = 64
-                currentData = batch_idx * len(data)/2
-                totalData = len(dataset.data_loader_A.dataset)
+
                 print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
                     ep, currentData, totalData,
                     currentData / totalData, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
