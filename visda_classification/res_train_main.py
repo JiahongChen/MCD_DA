@@ -124,6 +124,9 @@ else:
     
 def train(num_epoch):
     criterion = nn.CrossEntropyLoss().cuda()
+    correct1Array= []
+    correct2Array = []
+   	size = -1
     for ep in range(num_epoch):
         G.train()
         F1.train()
@@ -225,10 +228,16 @@ def train(num_epoch):
                     ep, batch_idx * len(data), 70000,
                     100. * batch_idx * len(data) / 70000, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
             if batch_idx == 1 and ep >0:
-                test(ep)
-                G.train()
+                correct1, correct2, s = test(ep)
+                correct1Array.append(correct1)
+                correct2Array.append(correct2)
+                size = s
+                G.train() # what does this train mean?
                 F1.train()
                 F2.train()
+    np.savetxt('correct1Array'+size+'.csv', correct1Array, delimiter = ",")
+    np.savetxt('correct2Array'+size+'.csv', correct2Array, delimiter = ",")
+    
 
 def test(epoch):
     G.eval()
@@ -270,6 +279,7 @@ def test(epoch):
         torch.save(F1.state_dict(), save_path+'_'+args.resnet+'_'+str(value)+'_'+'F1.pth')
         torch.save(F2.state_dict(), save_path+'_'+args.resnet+'_'+str(value)+'_'+'F2.pth')
         torch.save(G.state_dict(), save_path+'_'+args.resnet+'_'+str(value)+'_'+'G.pth')
+    return correct, correct2, size
 
 
 #for epoch in range(1, args.epochs + 1):
