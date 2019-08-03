@@ -215,9 +215,11 @@ def train(num_epoch):
                 loss_dis.backward()
                 optimizer_g.step()
             if batch_idx % args.log_interval == 0: # number of print out: 3264/50 = 64
+                currentData = batch_idx * len(data)/2
+                totalData = len(dataset.data_loader_A.dataset)
                 print('Train Ep: {} [{}/{} ({:.0f}%)]\tLoss1: {:.6f}\tLoss2: {:.6f}\t Dis: {:.6f} Entropy: {:.6f}'.format(
-                    ep, batch_idx * len(data)/2, len(dataset.data_loader_A.dataset),
-                    batch_idx * len(data)/ 2 / len(dataset.data_loader_A.dataset), loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
+                    ep, currentData, totalData,
+                    currentData / totalData, loss1.item(),loss2.item(),loss_dis.item(),entropy_loss.item()))
             if batch_idx == 1 and ep >0:
                 test(ep)
                 G.train()
