@@ -126,7 +126,7 @@ class AlexNet2(nn.Module):
         self.avgpool = nn.AdaptiveAvgPool2d((6, 6))
     def forward(self, x):
         x = self.features(x)
-        # x = self.avgpool(x)
+        x = self.avgpool(x)
         x = torch.flatten(x, 1)
         #x = self.classifier(x)
 
