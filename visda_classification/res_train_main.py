@@ -152,8 +152,8 @@ def train(num_epoch):
 				target1 = data['S_label']
 				data2  = data['T']
 				target2 = data['T_label']
-				# data1, target1 = data1.type(torch.cuda.HalfTensor), target1.type(torch.cuda.HalfTensor)
-				# data2, target2 = data2.type(torch.cuda.HalfTensor), target2.type(torch.cuda.HalfTensor)
+				data1, target1 = data1.type(torch.cuda.HalfTensor), target1.type(torch.cuda.HalfTensor)
+				data2, target2 = data2.type(torch.cuda.HalfTensor), target2.type(torch.cuda.HalfTensor)
 				data1, target1 = data1.cuda(), target1.cuda()
 				data2, target2 = data2.cuda(), target2.cuda()
 			# when pretraining network source only
