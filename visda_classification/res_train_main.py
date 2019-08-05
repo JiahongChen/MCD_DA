@@ -41,9 +41,11 @@ parser.add_argument('--name', type=str, default='board', metavar='B',
 					help='board dir')
 parser.add_argument('--save', type=str, default='../../save/', metavar='B',
 					help='board dir')
-parser.add_argument('--train_path', type=str, default='../../data/train/', metavar='B',
+parser.add_argument('--train_path', type=str, default='../../data/2017/train/', metavar='B',
 					help='directory of source datasets')
-parser.add_argument('--val_path', type=str, default='../../data/validation/', metavar='B',
+parser.add_argument('--val_path', type=str, default='../../data/2017/validation/', metavar='B',
+					help='directory of target datasets')
+parser.add_argument('--dataset', type=str, default='2017', metavar='B',
 					help='directory of target datasets')
 parser.add_argument('--resnet', type=str, default='101', metavar='B',
 					help='which resnet 18,50,101,152,200')
@@ -52,8 +54,14 @@ parser.add_argument('--model', type=str, default='alexnet', metavar='B',
 
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
-train_path = args.train_path
-val_path = args.val_path
+if '2018' in args.train_path:
+	print('=====Using 2018 visda dataset=====')
+	train_path = '../../data/2018/train/'
+	val_path = '../../data/2018/validation/'
+elif '2017' in args.train_path:
+	print('=====Using 2017 visda dataset=====')
+	train_path = '../../data/2017/train/'
+	val_path = '../../data/2017/validation/'
 num_k = args.num_k
 num_layer = args.num_layer
 batch_size = args.batch_size
