@@ -54,11 +54,11 @@ parser.add_argument('--model', type=str, default='alexnet', metavar='B',
 
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
-if args.train_path == '2018':
+if args.dataset == '2018':
 	print('=====Using 2018 visda dataset=====')
 	train_path = '../../data/2018/train/'
 	val_path = '../../data/2018/validation/'
-elif args.train_path == '2017':
+elif args.dataset == '2017':
 	print('=====Using 2017 visda dataset=====')
 	train_path = '../../data/2017/train/'
 	val_path = '../../data/2017/validation/'
