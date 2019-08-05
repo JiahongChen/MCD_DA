@@ -188,7 +188,7 @@ class AlexClassifier(nn.Module):
 class AlexClassifier2(nn.Module):
     # Classifier for VGG
     def __init__(self, num_classes=12):
-        super(AlexClassifier, self).__init__()
+        super(AlexClassifier2, self).__init__()
         mod = []
         mod.append(nn.Dropout().half())
         mod.append(nn.Linear(256 * 6 * 6, 4096).half())
