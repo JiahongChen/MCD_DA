@@ -109,21 +109,21 @@ class AlexNet2(nn.Module):
     def __init__(self):
         super(AlexNet2, self).__init__()
         self.features = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=5, stride=4, padding=2).half(),#nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
-            nn.ReLU(inplace=True).half(),
-            nn.MaxPool2d(kernel_size=3, stride=2).half(),
-            nn.Conv2d(64, 192, kernel_size=5, padding=2).half(),
-            nn.ReLU(inplace=True).half(),
-            nn.MaxPool2d(kernel_size=3, stride=2).half(),
-            nn.Conv2d(192, 384, kernel_size=3, padding=1).half(),
-            nn.ReLU(inplace=True).half(),
-            nn.Conv2d(384, 256, kernel_size=3, padding=1).half(),
-            nn.ReLU(inplace=True).half(),
-            nn.Conv2d(256, 256, kernel_size=3, padding=1).half(),
-            nn.ReLU(inplace=True).half(),
-            nn.MaxPool2d(kernel_size=3, stride=2).half(),
+            nn.Conv2d(3, 64, kernel_size=5, stride=4, padding=2),#nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=3, stride=2),
+            nn.Conv2d(64, 192, kernel_size=5, padding=2),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=3, stride=2),
+            nn.Conv2d(192, 384, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(384, 256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=3, stride=2),
         )
-        self.avgpool = nn.AdaptiveAvgPool2d((6, 6)).half()
+        self.avgpool = nn.AdaptiveAvgPool2d((6, 6))
     def forward(self, x):
         x = self.features(x)
         x = self.avgpool(x)
@@ -176,33 +176,6 @@ class AlexClassifier(nn.Module):
         # mod.append(nn.Dropout())
         #self.top = nn.Linear(256,256)        
         mod.append(nn.Linear(4096,13)) #mod.append(nn.Linear(256,13))
-        self.classifier = nn.Sequential(*mod)
-    def set_lambda(self, lambd):
-        self.lambd = lambd
-    def forward(self, x,reverse=False):
-        if reverse:
-            x = grad_reverse(x, self.lambd)
-        x = self.classifier(x)
-        return x
-
-class AlexClassifier2(nn.Module):
-    # Classifier for VGG
-    def __init__(self, num_classes=12):
-        super(AlexClassifier2, self).__init__()
-        mod = []
-        mod.append(nn.Dropout().half())
-        mod.append(nn.Linear(256 * 6 * 6, 4096).half())
-        mod.append(nn.ReLU().half())
-        mod.append(nn.Dropout().half())
-        mod.append(nn.Linear(4096,4096).half()) #mod.append(nn.Linear(4096,256))
-        #mod.append(nn.BatchNorm1d(256,affine=True))
-        mod.append(nn.ReLU().half())
-        #mod.append(nn.Linear(256,256))
-        # mod.append(nn.Dropout())
-        #mod.append(nn.ReLU())
-        # mod.append(nn.Dropout())
-        #self.top = nn.Linear(256,256)        
-        mod.append(nn.Linear(4096,13).half()) #mod.append(nn.Linear(256,13))
         self.classifier = nn.Sequential(*mod)
     def set_lambda(self, lambd):
         self.lambd = lambd
