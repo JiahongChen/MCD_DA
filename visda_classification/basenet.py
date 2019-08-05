@@ -91,7 +91,7 @@ class BaseNet(nn.Module):
 class AlexNet(nn.Module):
     def __init__(self):
         super(AlexNet, self).__init__()
-        model_ft = models.alexnet(pretrained=False)#model_ft = models.alexnet(pretrained=True)
+        model_ft = models.alexnet(pretrained=True)#model_ft = models.alexnet(pretrained=False)
         mod = list(model_ft.features.children())
         self.features = model_ft.features#nn.Sequential(*mod)        
         print(self.features[0])
