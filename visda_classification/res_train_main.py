@@ -115,10 +115,13 @@ F1.apply(weights_init)
 F2.apply(weights_init)
 lr = args.lr
 if args.cuda:
+	print('=====Using CUDA=====')
 	G.cuda()
 	F1.cuda()
 	F2.cuda()
 	torch.set_default_tensor_type(torch.HalfTensor)
+	torch.set_default_dtype(torch.float16)
+
 if args.optimizer == 'momentum':
 	optimizer_g = optim.SGD(list(G.features.parameters()), lr=args.lr,weight_decay=0.0005)
 	optimizer_f = optim.SGD(list(F1.parameters())+list(F2.parameters()),momentum=0.9,lr=args.lr,weight_decay=0.0005)
