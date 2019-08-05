@@ -185,6 +185,33 @@ class AlexClassifier(nn.Module):
         x = self.classifier(x)
         return x
 
+class AlexClassifier2(nn.Module):
+    # Classifier for VGG
+    def __init__(self, num_classes=12):
+        super(AlexClassifier, self).__init__()
+        mod = []
+        mod.append(nn.Dropout().half())
+        mod.append(nn.Linear(256 * 6 * 6, 4096).half())
+        mod.append(nn.ReLU().half())
+        mod.append(nn.Dropout().half())
+        mod.append(nn.Linear(4096,4096).half()) #mod.append(nn.Linear(4096,256))
+        #mod.append(nn.BatchNorm1d(256,affine=True))
+        mod.append(nn.ReLU().half())
+        #mod.append(nn.Linear(256,256))
+        # mod.append(nn.Dropout())
+        #mod.append(nn.ReLU())
+        # mod.append(nn.Dropout())
+        #self.top = nn.Linear(256,256)        
+        mod.append(nn.Linear(4096,13).half()) #mod.append(nn.Linear(256,13))
+        self.classifier = nn.Sequential(*mod)
+    def set_lambda(self, lambd):
+        self.lambd = lambd
+    def forward(self, x,reverse=False):
+        if reverse:
+            x = grad_reverse(x, self.lambd)
+        x = self.classifier(x)
+        return x
+
 
 
 class Classifier(nn.Module):
