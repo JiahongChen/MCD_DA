@@ -63,7 +63,7 @@ if not os.path.isdir(save_path):
 	os.mkdir(save_path)
 save_path += 'mcd_'+str(args.num_k)
 featureModel = args.model
-torch.set_default_dtype(torch.float16)
+torch.set_default_tensor_type(torch.HalfTensor)
 data_transforms = {
 	train_path: transforms.Compose([
 		transforms.Scale(256),
