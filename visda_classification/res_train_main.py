@@ -62,6 +62,10 @@ elif args.dataset == '2017':
 	print('=====Using 2017 visda dataset=====')
 	train_path = '../../data/2017/train/'
 	val_path = '../../data/2017/validation/'
+elif args.dataset == '2019':
+	print('=====Using 2019 visda dataset=====')
+	train_path = '../../data/2019/real/'
+	val_path = '../../data/2019/sketch/'
 num_k = args.num_k
 num_layer = args.num_layer
 batch_size = args.batch_size
