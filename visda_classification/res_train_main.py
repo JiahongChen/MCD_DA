@@ -51,6 +51,8 @@ parser.add_argument('--resnet', type=str, default='101', metavar='B',
 					help='which resnet 18,50,101,152,200')
 parser.add_argument('--model', type=str, default='alexnet', metavar='B',
 					help='type of the feature model used for encoder: [resnet, alexnet]')
+parser.add_argument('--multiGPU', type=bool, default=False,
+					help='enable train on multiple GPU or not, default is False')
 
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
@@ -113,6 +115,12 @@ if featureModel =='resnet':
 	G = ResBase(option)
 	F1 = ResClassifier(num_layer=num_layer)
 	F2 = ResClassifier(num_layer=num_layer)
+	if torch.cuda.device_count() > 1 and args.multiGPU:
+		print('===========Using Multiple GPU===========')
+		G = nn.DataParallel(G)
+		F1 = nn.DataParallel(F1)
+		F2 = nn.DataParallel(F2)
+
 elif featureModel =='alexnet':
 	print('===========Using AlexNet pre-train model as encoder===========')
 	G = AlexNet()
@@ -169,6 +177,7 @@ def train(num_epoch):
 			# when pretraining network source only
 			eta = 1.0
 			data = Variable(torch.cat((data1,data2),0))
+			print("Outside: input size", data.size())
 			currentData = batch_idx * len(data)/2
 			totalData = len(dataset.data_loader_A.dataset)
 			if currentData > 200000:#totalData:
