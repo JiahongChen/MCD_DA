@@ -143,8 +143,12 @@ if args.cuda:
 	torch.set_default_dtype(torch.float16)
 
 if args.optimizer == 'momentum':
-	optimizer_g = optim.SGD(list(G.features.parameters()), lr=args.lr,weight_decay=0.0005)
-	optimizer_f = optim.SGD(list(F1.parameters())+list(F2.parameters()),momentum=0.9,lr=args.lr,weight_decay=0.0005)
+	if args.multiGPU:
+		optimizer_g = optim.SGD(list(G.module.features.parameters()), lr=args.lr,weight_decay=0.0005)
+		optimizer_f = optim.SGD(list(F1.module.parameters())+list(F2.parameters()),momentum=0.9,lr=args.lr,weight_decay=0.0005)
+	else:
+		optimizer_g = optim.SGD(list(G.features.parameters()), lr=args.lr,weight_decay=0.0005)
+		optimizer_f = optim.SGD(list(F1.parameters())+list(F2.parameters()),momentum=0.9,lr=args.lr,weight_decay=0.0005)
 elif args.optimizer == 'adam':
 	optimizer_g = optim.Adam(G.features.parameters(), lr=args.lr,weight_decay=0.0005)
 	optimizer_f = optim.Adam(list(F1.parameters())+list(F2.parameters()), lr=args.lr,weight_decay=0.0005)
