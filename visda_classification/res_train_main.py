@@ -181,7 +181,7 @@ def train(num_epoch):
 			# when pretraining network source only
 			eta = 1.0
 			data = Variable(torch.cat((data1,data2),0))
-			print("Outside: input size", data.size())
+# 			print("Outside: input size", data.size())
 			currentData = batch_idx * len(data)/2
 			totalData = len(dataset.data_loader_A.dataset)
 			if currentData > 200000:#totalData:
