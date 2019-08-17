@@ -249,7 +249,7 @@ class ResBase(nn.Module):
         #self.model_ft =model_ft
         self.features = nn.Sequential(*mod)
     def forward(self, x):
-        print("\tIn Model: input size", x.size())
+#         print("\tIn Model: input size", x.size())
         x = self.features(x)
         
         x = x.view(x.size(0), self.dim)
