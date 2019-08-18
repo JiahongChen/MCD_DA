@@ -156,7 +156,7 @@ else:
 	optimizer_g = optim.Adadelta(G.features.parameters(),lr=args.lr,weight_decay=0.0005)
 	optimizer_f = optim.Adadelta(list(F1.parameters())+list(F2.parameters()),lr=args.lr,weight_decay=0.0005)    
 
-enum_dataset = list(enumerate(dataset))
+# enum_dataset = list(enumerate(dataset))
 def train(num_epoch):
 	criterion = nn.CrossEntropyLoss().cuda()
 	correct1Array= []
@@ -167,8 +167,8 @@ def train(num_epoch):
 		F1.train()
 		F2.train()
 		print(len(dataset.data_loader_A.dataset))
-# 		for batch_idx, data in enumerate(dataset): # number of batches: 207785/64 =3246
-		for (batch_idx, data) in enum_dataset: # number of batches: 207785/64 =3246
+		for batch_idx, data in enumerate(dataset): # number of batches: 207785/64 =3246
+# 		for (batch_idx, data) in enum_dataset: # number of batches: 207785/64 =3246
 			if batch_idx * batch_size > 10000:#change back to 30000
 				break
 			# print(type(data))
